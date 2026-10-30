@@ -7,50 +7,90 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Yuji+Syuku&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Noto+Serif+JP:wght@400;700;900&family=Sawarabi+Mincho&family=Cinzel:wght@600;700;900&family=Yuji+Syuku&display=swap" rel="stylesheet">
 <style>
-/* ── Design System: Modern Japanese Aesthetic with Crisp Legible Typography ── */
+/* ══════════════════════════════════════════════════════════
+   DESIGN SYSTEM: TSUKUYOMI WATCH AESTHETIC (from index.html)
+   Layered Ink-Wash, Vermilion Lacquer, Gold Shimmer,
+   Deep Shadows, Smooth Transitions & Rive Animations
+══════════════════════════════════════════════════════════ */
 :root {
-  --bg-deep: #09090d;
-  --bg-card: rgba(18, 18, 26, 0.94);
-  --bg-card-hover: rgba(28, 28, 40, 0.98);
-  --ink: #07070a;
-  --ink-light: #161622;
-  --vermilion: #e62b3c;
-  --vermilion-glow: rgba(230, 43, 60, 0.4);
-  --gold: #f0c850;
-  --gold-dark: #b8922c;
-  --gold-glow: rgba(240, 200, 80, 0.3);
-  --text-main: #f8f6f0;
-  --text-muted: #c2bcb0;
-  --text-dim: #948d7f;
+  --bg-deep: #0a0a0a;
+  --bg-card: linear-gradient(145deg, rgba(20, 11, 11, 0.96), rgba(11, 6, 6, 0.98));
+  --bg-card-hover: linear-gradient(145deg, rgba(30, 16, 16, 0.98), rgba(16, 9, 9, 0.99));
+  --ink: #0a0a0a;
+  --ink-light: #181010;
+  --vermilion: #8b0000;
+  --vermilion-bright: #e62b3c;
+  --vermilion-glow: rgba(139, 0, 0, 0.45);
+  --gold: #ffd700;
+  --gold-dark: #b8860b;
+  --gold-glow: rgba(255, 215, 0, 0.35);
+  --text-main: #f5e6c8;
+  --text-muted: rgba(245, 230, 200, 0.72);
+  --text-dim: rgba(245, 230, 200, 0.45);
+  --cream: #f5e6c8;
+  --pink: #c9506b;
   --jade: #2fa872;
-  --border-gold: rgba(240, 200, 80, 0.35);
-  --border-subtle: rgba(255, 255, 255, 0.1);
-  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.65);
-  /* Modern, ultra-readable typography font stack */
-  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', 'Helvetica Neue', Arial, sans-serif;
-  --font-heading: 'Yuji Syuku', serif;
-  --font-num: 'Cinzel', -apple-system, BlinkMacSystemFont, sans-serif;
+  --border-gold: rgba(184, 134, 11, 0.42);
+  --border-crimson: rgba(139, 0, 0, 0.48);
+  --border-subtle: rgba(184, 134, 11, 0.22);
+  --shadow-card: 0 15px 40px rgba(0, 0, 0, 0.72), 0 0 25px rgba(139, 0, 0, 0.15);
+  --font-heading: 'Cinzel Decorative', 'Noto Serif JP', serif;
+  --font-body: 'Sawarabi Mincho', 'Noto Serif JP', serif;
+  --font-num: 'Cinzel Decorative', 'Cinzel', serif;
 }
 
-* { box-sizing: border-box; scrollbar-width: thin; scrollbar-color: var(--gold-dark) var(--ink-light); }
+*, *::before, *::after {
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-dark) var(--ink-light);
+}
 ::-webkit-scrollbar { width: 7px; height: 7px; }
 ::-webkit-scrollbar-track { background: var(--ink-light); }
 ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
+html { scroll-behavior: smooth; }
+
 body {
   margin: 0;
-  background: radial-gradient(ellipse at 50% -10%, #2a1018 0%, #101018 45%, var(--bg-deep) 90%);
+  background: var(--bg-deep);
   color: var(--text-main);
   font-family: var(--font-body);
-  line-height: 1.55;
+  line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
   font-size: 15px;
   -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════
+   BACKGROUND LAYERS (Inspired by index.html)
+═══════════════════════════════════════════ */
+.bg-layer {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+}
+
+.bg-ink {
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(139,0,0,0.14) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(184,134,11,0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, #120b0b 0%, #0a0a0a 100%);
+}
+
+.bg-scene {
+  opacity: 0.18;
+  z-index: 1;
+}
+
+#bg-stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.65;
 }
 
 #petals {
@@ -60,63 +100,394 @@ body {
   z-index: 20;
 }
 
-#bg-stars {
+/* ── Side Decorative Kanji (from index.html) ── */
+.side-kanji {
   position: fixed;
-  inset: 0;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.35rem;
+  writing-mode: vertical-rl;
+  color: rgba(139,0,0,0.16);
+  letter-spacing: 0.6em;
+  z-index: 5;
   pointer-events: none;
-  z-index: 1;
-  opacity: 0.55;
+  user-select: none;
+  text-shadow: 0 0 10px rgba(184,134,11,0.08);
+}
+.side-kanji.left  { left: 1.2rem; top: 50%; transform: translateY(-50%); }
+.side-kanji.right { right: 1.2rem; top: 50%; transform: translateY(-50%); }
+
+@media (max-width: 800px) {
+  .side-kanji { display: none; }
 }
 
-/* ── Header ── */
+/* ═══════════════════════════════════════════
+   HEADER & NAVIGATION
+═══════════════════════════════════════════ */
 header {
   text-align: center;
-  padding: 1.6rem 1rem 0.5rem;
+  padding: 1.8rem 1rem 0.6rem;
   position: relative;
   z-index: 25;
 }
 
-.header-crest {
-  display: inline-block;
-  margin-bottom: 0.2rem;
-  filter: drop-shadow(0 0 16px var(--vermilion-glow));
-  transition: transform 0.4s ease;
-}
-.header-crest:hover { transform: scale(1.05) rotate(2deg); }
 
-h1 {
-  font-family: var(--font-heading);
-  font-weight: 400;
-  font-size: clamp(2.1rem, 5vw, 3.2rem);
-  margin: 0.1rem 0 0.2rem;
-  letter-spacing: 0.12em;
+/* ═══════════════════════════════════════════
+   TOP-LEFT TSUKUYOMI DROPDOWN NAVIGATION MENU
+═══════════════════════════════════════════ */
+.tsukuyomi-nav-dropdown {
+  position: fixed;
+  top: 18px;
+  left: 20px;
+  z-index: 1000;
+  font-family: 'Cinzel Decorative', serif;
+}
+
+.nav-dropdown-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   color: var(--gold);
-  text-shadow: 0 2px 14px rgba(240, 200, 80, 0.3), 0 0 40px rgba(230, 43, 60, 0.25);
+  background: rgba(18, 9, 9, 0.92);
+  border: 1.5px solid var(--vermilion);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7), 0 0 16px rgba(139, 0, 0, 0.3);
+}
+
+.nav-dropdown-trigger:hover,
+.tsukuyomi-nav-dropdown.open .nav-dropdown-trigger {
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 24px rgba(255, 215, 0, 0.35), inset 0 0 16px rgba(139, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.nav-trigger-arrow {
+  font-size: 0.72rem;
+  transition: transform 0.3s ease;
+  color: var(--gold-dark);
+}
+
+.tsukuyomi-nav-dropdown.open .nav-trigger-arrow {
+  transform: rotate(180deg);
+  color: var(--gold);
+}
+
+.nav-dropdown-trigger .corner {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-color: var(--gold);
+  border-style: solid;
+  transition: all 0.3s ease;
+}
+.nav-dropdown-trigger .corner.tl { top: 2px; left: 2px; border-width: 1.5px 0 0 1.5px; }
+.nav-dropdown-trigger .corner.tr { top: 2px; right: 2px; border-width: 1.5px 1.5px 0 0; }
+.nav-dropdown-trigger .corner.bl { bottom: 2px; left: 2px; border-width: 0 0 1.5px 1.5px; }
+.nav-dropdown-trigger .corner.br { bottom: 2px; right: 2px; border-width: 0 1.5px 1.5px 0; }
+
+.nav-dropdown-trigger:hover .corner,
+.tsukuyomi-nav-dropdown.open .corner {
+  width: 13px;
+  height: 13px;
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 310px;
+  background: linear-gradient(155deg, rgba(22, 11, 11, 0.98), rgba(11, 6, 6, 0.99));
+  border: 1.5px solid rgba(184, 134, 11, 0.45);
+  border-radius: 4px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(139, 0, 0, 0.3);
+  backdrop-filter: blur(14px);
+  padding: 8px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.28s ease;
+  pointer-events: none;
+}
+
+.tsukuyomi-nav-dropdown.open .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.nav-dropdown-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: var(--gold-dark);
+  text-align: center;
+  padding: 8px 12px 10px;
+  border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+}
+
+.nav-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  text-decoration: none;
+  color: var(--text-main);
+  border-bottom: 1px solid rgba(139, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.nav-menu-item:last-child {
+  border-bottom: none;
+}
+
+.nav-menu-item:hover {
+  background: rgba(139, 0, 0, 0.2);
+  color: var(--gold);
+  padding-left: 20px;
+}
+
+.nav-menu-item.active {
+  background: rgba(184, 134, 11, 0.12);
+  border-left: 3px solid var(--gold);
+}
+
+.nav-menu-icon {
+  font-size: 1.3rem;
+  width: 28px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.nav-menu-info {
+  flex: 1;
+}
+
+.nav-menu-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-main);
+  transition: color 0.25s ease;
+}
+
+.nav-menu-item:hover .nav-menu-title,
+.nav-menu-item.active .nav-menu-title {
+  color: var(--gold);
+}
+
+.nav-menu-desc {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.nav-menu-arrow {
+  color: rgba(184, 134, 11, 0.5);
+  font-size: 1.1rem;
+  transition: all 0.25s ease;
+}
+
+.nav-menu-item:hover .nav-menu-arrow {
+  color: var(--gold);
+  transform: translateX(3px);
+}
+
+.nav-menu-badge {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--bg-deep);
+  background: var(--gold);
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+@media (max-width: 760px) {
+  .tsukuyomi-nav-dropdown {
+    position: static;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+}
+
+.top-nav-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  max-width: 1280px;
+  margin: 0 auto 0.6rem;
+  padding: 0 1rem;
+}
+
+.eyebrow-pill {
+  color: var(--gold-dark);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font: 700 0.76rem/1.6 'Cinzel Decorative', serif;
+  background: rgba(30, 15, 15, 0.6);
+  border: 1px solid rgba(184, 134, 11, 0.35);
+  padding: 4px 14px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(139, 0, 0, 0.2);
+}
+
+.page-description {
+  max-width: 760px;
+  margin: 0.6rem auto 1.2rem;
+  color: var(--text-muted);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+/* ── Interactive Rive Celestial Crest ── */
+.header-crest-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem auto 0.2rem;
+}
+
+.rive-crest-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 25px rgba(184, 134, 11, 0.4)) drop-shadow(0 0 45px rgba(139, 0, 0, 0.3));
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s ease;
+  animation: floatCrest 4s ease-in-out infinite;
+}
+
+@keyframes floatCrest {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+
+.rive-crest-wrapper:hover {
+  transform: translateY(-4px) scale(1.07);
+  filter: drop-shadow(0 0 35px rgba(255, 215, 0, 0.6)) drop-shadow(0 0 55px rgba(139, 0, 0, 0.5));
+}
+
+.rive-crest-wrapper.pulse {
+  animation: crestPulse 0.7s ease;
+}
+
+@keyframes crestPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15) rotate(4deg); }
+  100% { transform: scale(1); }
+}
+
+.rive-canvas {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: block;
+}
+
+.crest-torii-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.9));
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.88;
+}
+
+.rive-crest-wrapper:hover .crest-torii-overlay {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.rive-glow-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 215, 0, 0.4);
+  pointer-events: none;
+  animation: rotateRing 20s linear infinite;
+}
+
+@keyframes rotateRing {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── App Title & Katana Divider (from index.html) ── */
+.app-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(2rem, 5.5vw, 3.8rem);
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  margin: 0.2rem 0 0.3rem;
+  background: linear-gradient(135deg, #ffd700 0%, #ff4500 30%, #ffd700 50%, #ff4500 70%, #ffd700 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmerGold 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.2));
+}
+
+@keyframes shimmerGold {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.subtitle-kanji {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(0.95rem, 2vw, 1.3rem);
+  color: var(--vermilion);
+  letter-spacing: 0.5em;
+  margin: 0.1rem 0 0.3rem;
+  text-shadow: 0 0 12px rgba(139, 0, 0, 0.5);
 }
 
 .subtitle {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  letter-spacing: 0.18em;
+  font-family: 'Cinzel Decorative', 'Noto Serif JP', serif;
+  font-size: 0.88rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--text-muted);
   margin: 0;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .katana-divider {
-  height: 16px;
-  margin: 0.7rem auto 1.1rem;
-  max-width: 640px;
-  display: block;
-  width: 88%;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.7));
+  width: min(340px, 85vw);
+  margin: 0.8rem auto 1.2rem;
+  opacity: 0.75;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8));
 }
 
-/* ── Modern Japanese Location Search Bar ── */
+/* ═══════════════════════════════════════════
+   SEARCH CONTAINER & CONTROLS
+═══════════════════════════════════════════ */
 .search-container {
-  max-width: 780px;
-  margin: 0 auto 1.1rem;
+  max-width: 820px;
+  margin: 0 auto 1.2rem;
   padding: 0 1rem;
   position: relative;
   z-index: 30;
@@ -125,19 +496,19 @@ h1 {
 .search-box {
   display: flex;
   align-items: center;
-  background: rgba(14, 14, 22, 0.94);
+  background: rgba(16, 9, 9, 0.95);
   border: 1.5px solid var(--border-gold);
   border-radius: 50px;
-  padding: 0.35rem 0.45rem 0.35rem 1.1rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(240, 200, 80, 0.15);
-  backdrop-filter: blur(12px);
+  padding: 0.35rem 0.5rem 0.35rem 1.2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(184, 134, 11, 0.15);
+  backdrop-filter: blur(14px);
   transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   gap: 0.5rem;
 }
 
 .search-box:focus-within {
   border-color: var(--gold);
-  box-shadow: 0 10px 40px rgba(240, 200, 80, 0.25), 0 0 0 2px rgba(240, 200, 80, 0.35);
+  box-shadow: 0 10px 40px rgba(255, 215, 0, 0.25), 0 0 0 2px rgba(184, 134, 11, 0.4);
   transform: translateY(-2px);
 }
 
@@ -154,7 +525,7 @@ h1 {
   background: transparent;
   border: none;
   outline: none;
-  color: #ffffff;
+  color: var(--cream);
   font-family: var(--font-body);
   font-size: 1rem;
   padding: 0.4rem 0.2rem;
@@ -163,35 +534,36 @@ h1 {
 #q::placeholder { color: var(--text-dim); }
 
 .btn-search {
-  background: linear-gradient(135deg, #c1121f, #e62b3c);
-  color: #ffffff;
-  border: 1px solid var(--gold);
+  background: linear-gradient(135deg, #8b0000 0%, #c1121f 50%, #8b0000 100%);
+  color: var(--gold);
+  border: 1.5px solid var(--gold);
   border-radius: 40px;
   padding: 0.55rem 1.4rem;
-  font-family: var(--font-body);
+  font-family: 'Cinzel Decorative', serif;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  box-shadow: 0 4px 15px var(--vermilion-glow);
-  transition: all 0.25s ease;
+  box-shadow: 0 4px 18px var(--vermilion-glow);
+  transition: all 0.3s ease;
   white-space: nowrap;
 }
 
 .btn-search:hover {
-  background: linear-gradient(135deg, #e62b3c, #ff3c4d);
-  transform: scale(1.03);
-  box-shadow: 0 6px 20px rgba(230, 43, 60, 0.6);
+  background: linear-gradient(135deg, #a00000, #e62b3c);
+  transform: scale(1.04);
+  box-shadow: 0 6px 24px rgba(230, 43, 60, 0.6), 0 0 15px rgba(255, 215, 0, 0.3);
 }
 
 .btn-geo {
-  background: rgba(30, 30, 42, 0.9);
+  background: rgba(26, 13, 13, 0.92);
   color: var(--text-main);
-  border: 1px solid rgba(240, 200, 80, 0.5);
+  border: 1px solid var(--border-gold);
   border-radius: 40px;
-  padding: 0.55rem 1.1rem;
+  padding: 0.55rem 1.15rem;
   font-family: var(--font-body);
   font-size: 0.88rem;
   font-weight: 600;
@@ -199,63 +571,65 @@ h1 {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  transition: all 0.25s ease;
+  transition: all 0.3s ease;
   white-space: nowrap;
 }
 
 .btn-geo:hover {
-  background: rgba(45, 45, 65, 0.95);
+  background: rgba(45, 20, 20, 0.95);
   border-color: var(--gold);
   color: var(--gold);
-  transform: scale(1.02);
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
 }
 
-/* Preset chips */
 .preset-chips {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 0.45rem;
-  margin-top: 0.7rem;
+  margin-top: 0.75rem;
 }
 
 .preset-chip {
-  background: rgba(22, 22, 32, 0.8);
-  border: 1px solid rgba(240, 200, 80, 0.25);
+  background: rgba(22, 11, 11, 0.85);
+  border: 1px solid rgba(184, 134, 11, 0.3);
   color: var(--text-muted);
   border-radius: 20px;
-  padding: 0.24rem 0.8rem;
-  font-size: 0.8rem;
+  padding: 0.28rem 0.85rem;
+  font-size: 0.82rem;
   font-family: var(--font-body);
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
 }
 
 .preset-chip:hover {
-  background: rgba(230, 43, 60, 0.22);
+  background: rgba(139, 0, 0, 0.32);
   border-color: var(--gold);
-  color: #ffffff;
-  transform: translateY(-1px);
+  color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.2);
 }
 
-/* Status message bar */
 #status {
   text-align: center;
   color: var(--gold);
   min-height: 1.4em;
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   margin-bottom: 0.8rem;
   font-weight: 600;
-  text-shadow: 0 0 10px rgba(240, 200, 80, 0.3);
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.35);
   position: relative;
   z-index: 25;
 }
 
-/* Active Spot Banner */
+/* ═══════════════════════════════════════════
+   ACTIVE SPOT BANNER
+═══════════════════════════════════════════ */
 .active-banner {
   max-width: 1280px;
   margin: 0 auto 1.1rem;
@@ -265,16 +639,16 @@ h1 {
 .active-banner.visible { display: block; animation: fadeInDown 0.35s ease; }
 
 .active-banner-inner {
-  background: linear-gradient(90deg, rgba(230, 43, 60, 0.25), rgba(240, 200, 80, 0.18), rgba(18, 18, 28, 0.92));
+  background: linear-gradient(90deg, rgba(139, 0, 0, 0.32), rgba(184, 134, 11, 0.22), rgba(18, 9, 9, 0.95));
   border: 1.5px solid var(--gold);
-  border-radius: 12px;
-  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  padding: 0.85rem 1.35rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 0.8rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.65), 0 0 20px rgba(184, 134, 11, 0.2);
 }
 
 .active-spot-text {
@@ -285,26 +659,27 @@ h1 {
 }
 .active-spot-badge {
   background: var(--vermilion);
-  color: #fff;
-  font-size: 0.75rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: 6px;
+  color: var(--gold);
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.74rem;
+  padding: 0.22rem 0.65rem;
+  border-radius: 2px;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   border: 1px solid var(--gold);
 }
 
 .btn-reset-view {
-  background: rgba(14, 14, 22, 0.9);
-  border: 1px solid var(--gold);
+  background: rgba(14, 8, 8, 0.92);
+  border: 1.5px solid var(--gold);
   color: var(--gold);
-  border-radius: 6px;
-  padding: 0.4rem 0.95rem;
+  border-radius: 4px;
+  padding: 0.45rem 1rem;
   font-size: 0.85rem;
   font-family: var(--font-body);
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -312,13 +687,16 @@ h1 {
 .btn-reset-view:hover {
   background: var(--gold);
   color: var(--ink);
+  box-shadow: 0 0 16px rgba(255, 215, 0, 0.4);
 }
 
-/* ── Balanced Responsive Grid (No Awkward Gaps) ── */
+/* ═══════════════════════════════════════════
+   MAIN LAYOUT & PANELS
+═══════════════════════════════════════════ */
 main {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-  gap: 1.3rem;
+  gap: 1.4rem;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 1rem 2.5rem;
@@ -333,54 +711,95 @@ main {
 .col-left, .col-right {
   display: flex;
   flex-direction: column;
-  gap: 1.3rem;
+  gap: 1.4rem;
 }
 
-/* ── Panels & Cards ── */
+/* ── Panel Design with Corner Brackets (from index.html) ── */
 .panel {
-  border: 1px solid var(--border-gold);
-  background: var(--bg-card);
-  padding: 1.25rem;
   position: relative;
-  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 4px;
+  padding: 1.35rem;
   box-shadow: var(--shadow-card);
-  backdrop-filter: blur(10px);
-  transition: border-color 0.3s;
+  backdrop-filter: blur(12px);
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .panel:hover {
-  border-color: rgba(240, 200, 80, 0.65);
+  border-color: rgba(255, 215, 0, 0.6);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.78), 0 0 30px rgba(184, 134, 11, 0.22);
+  transform: translateY(-2px);
+}
+
+.panel::before, .panel::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--gold);
+  border-style: solid;
+  pointer-events: none;
+  transition: all 0.35s ease;
+}
+.panel::before {
+  top: 5px;
+  left: 5px;
+  border-width: 1.5px 0 0 1.5px;
+}
+.panel::after {
+  bottom: 5px;
+  right: 5px;
+  border-width: 0 1.5px 1.5px 0;
+}
+.panel:hover::before, .panel:hover::after {
+  width: 22px;
+  height: 22px;
 }
 
 .panel-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(230, 43, 60, 0.5);
-  padding-bottom: 0.55rem;
-  margin-bottom: 0.95rem;
+  border-bottom: 1px solid rgba(139, 0, 0, 0.45);
+  padding-bottom: 0.6rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.panel-header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 80px;
+  height: 2px;
+  background: var(--gold);
 }
 
 .panel h2 {
   font-family: var(--font-heading);
-  font-weight: 400;
+  font-weight: 700;
   color: var(--gold);
   margin: 0;
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 16px rgba(255, 215, 0, 0.2);
 }
 
 .panel h2 svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   color: var(--gold);
 }
 
-/* ── Japanese Hanging Scroll (Makimono / Kakejiku) ── */
+/* ═══════════════════════════════════════════
+   JAPANESE HANGING SCROLL MAP (Makimono / Kakejiku)
+═══════════════════════════════════════════ */
 .scroll-wrapper {
   position: relative;
   padding: 22px 0;
@@ -394,7 +813,7 @@ main {
   height: 22px;
   background: linear-gradient(180deg, #421c10 0%, #1f0b06 40%, #522416 75%, #180804 100%);
   border-radius: 11px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 200, 100, 0.3);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.85), inset 0 1px 2px rgba(255, 200, 100, 0.3);
   z-index: 50;
   display: flex;
   justify-content: space-between;
@@ -407,7 +826,7 @@ main {
   width: 18px;
   height: 26px;
   background: radial-gradient(circle, #f5d67a 0%, #b8860b 60%, #5c4308 100%);
-  border-radius: 5px;
+  border-radius: 4px;
   border: 1px solid #ffe89e;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
 }
@@ -415,26 +834,26 @@ main {
 .scroll-roller-bottom { bottom: 3px; }
 
 .scroll-canvas {
-  background: #1c1512;
+  background: #18110f;
   border-left: 12px solid #5a141c;
   border-right: 12px solid #5a141c;
   border-top: 4px solid var(--gold-dark);
   border-bottom: 4px solid var(--gold-dark);
   border-radius: 4px;
   position: relative;
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 8px 30px rgba(0, 0, 0, 0.7);
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.85), 0 8px 32px rgba(0, 0, 0, 0.7);
   overflow: hidden;
 }
 
 #map {
   height: 480px;
   width: 100%;
-  background: #151318;
+  background: #120e10;
 }
 
 .leaflet-container {
   font-family: var(--font-body);
-  background: #141215;
+  background: #120e10;
 }
 
 .ink-tiles {
@@ -461,9 +880,9 @@ main {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: rgba(14, 14, 22, 0.95);
+  background: rgba(14, 8, 8, 0.96);
   border: 2px solid var(--gold);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8), 0 0 12px var(--gold-glow);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.85), 0 0 12px var(--gold-glow);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -487,9 +906,9 @@ main {
   position: absolute;
   top: -6px;
   right: -8px;
-  background: linear-gradient(135deg, #c1121f, #e62b3c);
+  background: linear-gradient(135deg, #8b0000, #c1121f);
   color: #ffffff;
-  font-family: var(--font-body);
+  font-family: var(--font-num);
   font-weight: 800;
   font-size: 0.72rem;
   padding: 1px 6px;
@@ -501,7 +920,7 @@ main {
 .main-search-pin {
   width: 42px;
   height: 42px;
-  filter: drop-shadow(0 4px 12px rgba(230, 43, 60, 0.7));
+  filter: drop-shadow(0 4px 12px rgba(139, 0, 0, 0.8));
   animation: bouncePin 2s infinite ease-in-out;
 }
 
@@ -516,20 +935,20 @@ main {
   100% { transform: scale(1); }
 }
 
-/* ── Leaflet Popups & Tooltips ── */
+/* ── Leaflet Popups ── */
 .leaflet-popup-content-wrapper {
-  background: rgba(16, 16, 26, 0.96) !important;
+  background: rgba(16, 9, 9, 0.98) !important;
   color: var(--text-main) !important;
-  border-radius: 12px !important;
+  border-radius: 4px !important;
   border: 1.5px solid var(--gold) !important;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), 0 0 20px var(--gold-glow) !important;
-  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 25px var(--gold-glow) !important;
+  backdrop-filter: blur(12px) !important;
   padding: 0 !important;
 }
 
 .leaflet-popup-tip {
-  background: rgba(16, 16, 26, 0.96) !important;
-  border: 1px solid var(--gold) !important;
+  background: rgba(16, 9, 9, 0.98) !important;
+  border: 1.5px solid var(--gold) !important;
 }
 
 .leaflet-popup-content {
@@ -546,8 +965,8 @@ main {
   font-family: var(--font-heading);
   color: var(--gold);
   margin: 0 0 0.5rem;
-  font-size: 1.25rem;
-  border-bottom: 1px solid rgba(230, 43, 60, 0.6);
+  font-size: 1.2rem;
+  border-bottom: 1px solid rgba(139, 0, 0, 0.6);
   padding-bottom: 0.35rem;
   letter-spacing: 0.04em;
 }
@@ -555,9 +974,9 @@ main {
 .sp-score-banner {
   text-align: center;
   padding: 0.45rem;
-  background: rgba(240, 200, 80, 0.12);
-  border: 1px solid rgba(240, 200, 80, 0.3);
-  border-radius: 8px;
+  background: rgba(184, 134, 11, 0.15);
+  border: 1px solid rgba(184, 134, 11, 0.4);
+  border-radius: 4px;
   margin-bottom: 0.6rem;
 }
 
@@ -590,34 +1009,38 @@ main {
 .sp-select-btn {
   width: 100%;
   margin-top: 0.8rem;
-  background: linear-gradient(135deg, #c1121f, #e62b3c);
-  color: #fff;
+  background: linear-gradient(135deg, #8b0000, #c1121f);
+  color: var(--gold);
   border: 1px solid var(--gold);
-  border-radius: 6px;
+  border-radius: 4px;
   padding: 0.5rem;
-  font-family: var(--font-body);
+  font-family: 'Cinzel Decorative', serif;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.86rem;
+  letter-spacing: 0.06em;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
 }
 .sp-select-btn:hover {
-  background: #ff2a3c;
-  box-shadow: 0 4px 12px var(--vermilion-glow);
+  background: linear-gradient(135deg, #a00000, #e62b3c);
+  box-shadow: 0 4px 16px var(--vermilion-glow);
+  transform: scale(1.02);
 }
 
 .leaflet-tooltip.spot-tooltip {
-  background: rgba(12, 12, 20, 0.96);
+  background: rgba(12, 7, 7, 0.98);
   color: #ffffff;
   border: 1px solid var(--gold);
   font-family: var(--font-body);
   padding: 0.45rem 0.85rem;
   font-size: 0.9rem;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
 }
 
-/* ── Night Honor Score Card ── */
+/* ═══════════════════════════════════════════
+   NIGHT HONOR SCORE & METERS
+═══════════════════════════════════════════ */
 .score-wrap {
   display: flex;
   gap: 1.2rem;
@@ -636,6 +1059,7 @@ main {
   width: 100%;
   height: 100%;
   transform: rotate(-90deg);
+  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.35));
 }
 
 .score-number {
@@ -654,11 +1078,11 @@ main {
 
 .score-sublabel {
   font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: var(--text-muted);
   text-transform: uppercase;
-  font-family: var(--font-body);
-  font-weight: 600;
+  font-family: 'Cinzel Decorative', serif;
+  font-weight: 700;
 }
 
 .score-meta {
@@ -671,16 +1095,17 @@ main {
   color: var(--gold);
   margin: 0 0 0.5rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
+  font-family: var(--font-heading);
 }
 
 .location-title-badge {
   display: inline-block;
-  background: rgba(240, 200, 80, 0.12);
+  background: rgba(184, 134, 11, 0.15);
   border: 1px solid var(--border-gold);
-  color: var(--text-main);
-  padding: 0.25rem 0.65rem;
-  border-radius: 6px;
+  color: var(--cream);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
   font-size: 0.85rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
@@ -698,14 +1123,14 @@ dl#wx {
   font-size: 0.94rem;
 }
 dt { color: var(--text-muted); }
-dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
+dd { margin: 0; text-align: right; color: var(--cream); font-weight: 600; }
 
 /* ── Light Pollution Meter ── */
 .lp-meter {
-  margin: 1rem 0 0.2rem;
-  background: rgba(10, 10, 18, 0.6);
-  padding: 0.85rem 1rem;
-  border-radius: 8px;
+  margin: 1.1rem 0 0.2rem;
+  background: rgba(12, 6, 6, 0.75);
+  padding: 0.85rem 1.1rem;
+  border-radius: 4px;
   border: 1px solid var(--border-subtle);
 }
 
@@ -722,7 +1147,7 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   border-radius: 8px;
   background: linear-gradient(to right, #050c18, #0e1e38, #193836, #325828, #6f7818, #a85818, #c82818, #f01828);
   position: relative;
-  border: 1px solid rgba(240, 200, 80, 0.5);
+  border: 1px solid rgba(184, 134, 11, 0.5);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
@@ -745,9 +1170,12 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   font-size: 1.05rem;
   font-weight: 700;
   margin: 0.6rem 0 0;
+  font-family: var(--font-heading);
 }
 
-/* ── Moon Card ── */
+/* ═══════════════════════════════════════════
+   MOON PHASE & CELESTIAL TWILIGHT
+═══════════════════════════════════════════ */
 #moon {
   display: flex;
   gap: 1.4rem;
@@ -757,7 +1185,7 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   width: 90px;
   height: 90px;
   flex-shrink: 0;
-  filter: drop-shadow(0 0 16px rgba(245, 238, 223, 0.3));
+  filter: drop-shadow(0 0 18px rgba(255, 215, 0, 0.35));
 }
 #moondl {
   display: grid;
@@ -768,7 +1196,9 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   font-size: 0.94rem;
 }
 
-/* ── High-Information Top Nearby Spots List ── */
+/* ═══════════════════════════════════════════
+   TOP NEARBY SPOTS LIST
+═══════════════════════════════════════════ */
 .spots-header {
   display: flex;
   justify-content: space-between;
@@ -776,47 +1206,60 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   flex-wrap: wrap;
   gap: 0.6rem;
   margin-bottom: 0.9rem;
-  border-bottom: 1px solid rgba(230, 43, 60, 0.4);
-  padding-bottom: 0.55rem;
+  border-bottom: 1px solid rgba(139, 0, 0, 0.45);
+  padding-bottom: 0.6rem;
 }
 .spots-header h2 { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
 
 .sort-select {
-  background: rgba(20, 20, 30, 0.9);
+  background: rgba(18, 9, 9, 0.95);
   color: var(--gold);
-  border: 1px solid var(--gold);
-  border-radius: 6px;
+  border: 1.5px solid var(--gold);
+  border-radius: 4px;
   font-size: 0.88rem;
   font-family: var(--font-body);
   font-weight: 600;
   padding: 0.4rem 1.6rem 0.4rem 0.8rem;
   cursor: pointer;
+  transition: all 0.25s ease;
+}
+.sort-select:hover {
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.25);
 }
 
 #spots {
   list-style: none;
   margin: 0;
-  padding: 0;
-  max-height: 480px;
+  padding: 0 6px 0 0;
+  height: 520px;
+  max-height: 520px;
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.85rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-dark) rgba(20, 10, 10, 0.8);
 }
+#spots::-webkit-scrollbar { width: 6px; }
+#spots::-webkit-scrollbar-track { background: rgba(20, 10, 10, 0.8); }
+#spots::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
 
-/* ── Generous Full-Breadth Spot Cards ── */
 .spot-item {
-  background: rgba(22, 22, 34, 0.9);
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1rem 1.15rem;
+  background: linear-gradient(145deg, rgba(22, 12, 12, 0.94), rgba(12, 7, 7, 0.98));
+  border: 1.5px solid rgba(184, 134, 11, 0.28);
+  border-radius: 4px;
+  padding: 1.15rem 1.25rem;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
-  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  gap: 0.75rem;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   position: relative;
-  overflow: hidden;
+  height: auto;
+  min-height: auto;
+  overflow: visible;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
 }
 
 .spot-item::before {
@@ -825,28 +1268,27 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   left: 0;
   top: 0;
   bottom: 0;
-  width: 5px;
+  width: 4px;
   background: transparent;
-  transition: background 0.2s;
+  transition: background 0.25s;
 }
 
 .spot-item:hover {
-  background: rgba(35, 35, 52, 0.98);
-  border-color: rgba(240, 200, 80, 0.6);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(145deg, rgba(32, 16, 16, 0.96), rgba(18, 9, 9, 0.98));
+  border-color: var(--gold);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65), 0 0 20px rgba(184, 134, 11, 0.25);
 }
 
 .spot-item.active-spot {
-  background: linear-gradient(135deg, rgba(230, 43, 60, 0.28), rgba(30, 30, 46, 0.98));
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.35), rgba(28, 14, 14, 0.98));
   border-color: var(--gold);
-  box-shadow: 0 0 20px var(--gold-glow);
+  box-shadow: 0 0 25px var(--gold-glow), inset 0 0 20px rgba(139, 0, 0, 0.25);
 }
 .spot-item.active-spot::before {
   background: var(--gold);
 }
 
-/* Spot Header: Category, Distance & Score on Top Row */
 .spot-header-row {
   display: flex;
   align-items: center;
@@ -871,7 +1313,7 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(10, 10, 18, 0.85);
+  background: rgba(14, 8, 8, 0.95);
   border: 1px solid var(--border-gold);
   border-radius: 50%;
   flex-shrink: 0;
@@ -882,10 +1324,10 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   color: var(--gold);
   font-weight: 700;
   font-size: 0.84rem;
-  background: rgba(240, 200, 80, 0.1);
-  border: 1px solid rgba(240, 200, 80, 0.25);
+  background: rgba(184, 134, 11, 0.12);
+  border: 1px solid rgba(184, 134, 11, 0.3);
   border-radius: 4px;
-  padding: 0.12rem 0.5rem;
+  padding: 0.14rem 0.55rem;
 }
 
 .spot-bortle-pill {
@@ -893,9 +1335,9 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   align-items: center;
   gap: 0.3rem;
   font-size: 0.78rem;
-  padding: 0.1rem 0.45rem;
+  padding: 0.12rem 0.48rem;
   border-radius: 4px;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 .bortle-dot {
@@ -909,17 +1351,19 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   display: flex;
   align-items: baseline;
   gap: 0.35rem;
-  background: rgba(10, 10, 18, 0.85);
+  background: rgba(12, 6, 6, 0.9);
   border: 1.5px solid var(--gold);
-  padding: 0.2rem 0.65rem;
-  border-radius: 8px;
+  padding: 0.22rem 0.7rem;
+  border-radius: 4px;
   flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.15);
 }
 .spot-score-num {
   font-family: var(--font-num);
   font-weight: 900;
   font-size: 1.5rem;
   line-height: 1;
+  color: var(--gold);
 }
 .spot-score-label {
   font-size: 0.68rem;
@@ -928,32 +1372,51 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   letter-spacing: 0.06em;
 }
 
-/* Spot Title: UNCONSTRAINED 100% FULL BREADTH! */
 .spot-title-area {
-  width: 100%;
-  padding: 0.1rem 0;
+  flex: 1;
+  padding: 0;
+  min-width: 0;
 }
 
 .spot-name-full {
   margin: 0;
-  font-size: 1.18rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: #ffffff;
-  line-height: 1.4;
+  line-height: 1.45;
   word-break: break-word;
+  white-space: normal;
   overflow-wrap: anywhere;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
 }
 
-/* Spot Data Metrics Row: Cloud, Visibility, LP, Temp fully readable! */
+.spot-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+  padding-bottom: 0.45rem;
+}
+
+.spot-type-tag {
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.45);
+  letter-spacing: 0.03em;
+}
+
 .spot-metrics-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
   gap: 0.45rem;
-  background: rgba(12, 12, 18, 0.65);
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(12, 6, 6, 0.7);
+  padding: 0.55rem 0.8rem;
+  border-radius: 4px;
+  border: 1px solid rgba(184, 134, 11, 0.15);
   font-size: 0.86rem;
 }
 
@@ -964,11 +1427,154 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   color: var(--text-muted);
 }
 .spot-metric-val {
-  color: #ffffff;
+  color: var(--cream);
   font-weight: 600;
 }
 
-/* ── NASA SkyView Modal & Live Virtual Telescope Viewer ── */
+.spots-empty-placeholder {
+  padding: 2.2rem 1.4rem;
+  text-align: center;
+  background: rgba(16, 9, 9, 0.7);
+  border: 1.5px dashed var(--border-gold);
+  border-radius: 4px;
+}
+.spots-empty-placeholder p {
+  margin: 0.4rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+.spots-empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.4rem;
+}
+
+/* ═══════════════════════════════════════════
+   CELESTIAL STAR MAP (TENMON-ZU)
+═══════════════════════════════════════════ */
+.star-map-panel {
+  grid-column: 1 / -1;
+  padding: 1.4rem;
+}
+
+.star-map-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.star-map-controls {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sky-btn {
+  background: rgba(20, 10, 10, 0.9);
+  border: 1px solid var(--border-gold);
+  color: var(--text-main);
+  border-radius: 4px;
+  padding: 0.45rem 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.sky-btn:hover, .sky-btn.active {
+  background: rgba(184, 134, 11, 0.25);
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.25);
+}
+
+.star-canvas-container {
+  width: 100%;
+  height: 520px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, #0a0b16 0%, #05060b 80%, #020205 100%);
+  border: 1.5px solid var(--border-gold);
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.9), 0 8px 30px rgba(0, 0, 0, 0.7);
+  cursor: grab;
+}
+.star-canvas-container:active { cursor: grabbing; }
+
+#sky-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.sky-overlay-info {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  background: rgba(12, 7, 7, 0.92);
+  border: 1px solid var(--border-gold);
+  padding: 0.45rem 0.9rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+.sky-zoom-controls {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  z-index: 10;
+}
+
+.sky-zoom-btn {
+  width: 36px;
+  height: 36px;
+  background: rgba(18, 9, 9, 0.94);
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
+  border-radius: 4px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.sky-zoom-btn:hover {
+  background: var(--gold);
+  color: var(--ink);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.sky-legend {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 0.85rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.sky-legend span { display: inline-flex; align-items: center; gap: 0.45rem; }
+.sky-legend-dot { width: 9px; height: 9px; border-radius: 50%; }
+
+/* ═══════════════════════════════════════════
+   NASA LIVE SPACE TELESCOPE MODAL (from index.html)
+═══════════════════════════════════════════ */
 .skyview-modal {
   position: fixed;
   inset: 0;
@@ -982,52 +1588,73 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
 .skyview-modal-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(4, 4, 8, 0.88);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(10px);
 }
 
 .skyview-modal-content {
   position: relative;
   z-index: 10;
-  background: rgba(16, 16, 26, 0.98);
+  background: linear-gradient(145deg, rgba(20, 10, 10, 0.98), rgba(10, 5, 5, 0.99));
   border: 2px solid var(--gold);
-  border-radius: 14px;
-  box-shadow: 0 12px 45px rgba(0, 0, 0, 0.85), 0 0 30px var(--gold-glow);
+  border-radius: 4px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 215, 0, 0.25);
   width: 100%;
-  max-width: 780px;
+  max-width: 800px;
   max-height: 92vh;
   overflow-y: auto;
-  padding: 1.4rem;
+  padding: 1.6rem;
   animation: fadeInDown 0.3s ease;
+}
+
+.skyview-modal-content::before, .skyview-modal-content::after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: var(--gold);
+  border-style: solid;
+  pointer-events: none;
+}
+.skyview-modal-content::before {
+  top: 8px;
+  left: 8px;
+  border-width: 2px 0 0 2px;
+}
+.skyview-modal-content::after {
+  bottom: 8px;
+  right: 8px;
+  border-width: 0 2px 2px 0;
 }
 
 .skyview-modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1.5px solid rgba(230, 43, 60, 0.5);
+  border-bottom: 1.5px solid rgba(139, 0, 0, 0.6);
   padding-bottom: 0.8rem;
   margin-bottom: 1.1rem;
 }
 
 .skyview-close-btn {
-  background: rgba(26, 26, 38, 0.8);
-  border: 1px solid var(--gold);
+  background: rgba(22, 11, 11, 0.85);
+  border: 1.5px solid var(--gold);
   color: var(--gold);
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  font-size: 1.1rem;
+  border-radius: 4px;
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
 }
 .skyview-close-btn:hover {
   background: var(--vermilion);
   color: #fff;
   border-color: #fff;
+  transform: rotate(90deg);
 }
 
 .skyview-presets-row {
@@ -1039,8 +1666,8 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
 }
 
 .skyview-preset-btn {
-  background: rgba(24, 24, 36, 0.9);
-  border: 1px solid rgba(240, 200, 80, 0.3);
+  background: rgba(22, 11, 11, 0.9);
+  border: 1px solid rgba(184, 134, 11, 0.3);
   color: var(--text-muted);
   border-radius: 20px;
   padding: 0.25rem 0.75rem;
@@ -1048,12 +1675,13 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   font-family: var(--font-body);
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
 }
 .skyview-preset-btn:hover, .skyview-preset-btn.active {
-  background: rgba(240, 200, 80, 0.2);
+  background: rgba(184, 134, 11, 0.25);
   border-color: var(--gold);
-  color: #ffffff;
+  color: var(--gold);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
 }
 
 .skyview-query-form {
@@ -1061,10 +1689,10 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   gap: 0.8rem;
   flex-wrap: wrap;
   align-items: flex-end;
-  background: rgba(10, 10, 16, 0.65);
+  background: rgba(12, 6, 6, 0.7);
   padding: 0.8rem 1rem;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  border: 1px solid rgba(184, 134, 11, 0.2);
   margin-bottom: 1.1rem;
 }
 
@@ -1081,18 +1709,18 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   color: var(--text-muted);
 }
 .skyview-form-group input, .skyview-form-group select {
-  background: rgba(22, 22, 34, 0.9);
+  background: rgba(18, 9, 9, 0.92);
   border: 1px solid var(--border-gold);
   color: #ffffff;
   padding: 0.45rem 0.75rem;
-  border-radius: 6px;
+  border-radius: 4px;
   font-family: var(--font-body);
   font-size: 0.92rem;
   outline: none;
 }
 .skyview-form-group input:focus, .skyview-form-group select:focus {
   border-color: var(--gold);
-  box-shadow: 0 0 8px var(--gold-glow);
+  box-shadow: 0 0 12px var(--gold-glow);
 }
 
 .skyview-viewer-area {
@@ -1106,13 +1734,13 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   height: 340px;
   background: #020204;
   border: 1.5px solid var(--border-gold);
-  border-radius: 10px;
+  border-radius: 4px;
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9);
+  box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.95);
 }
 
 .skyview-image-container img {
@@ -1134,7 +1762,7 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
 .skyview-loader {
   width: 36px;
   height: 36px;
-  border: 3px solid rgba(240, 200, 80, 0.2);
+  border: 3px solid rgba(255, 215, 0, 0.2);
   border-top-color: var(--gold);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
@@ -1143,10 +1771,10 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .skyview-telemetry {
-  background: rgba(12, 12, 20, 0.8);
+  background: rgba(12, 6, 6, 0.85);
   border: 1px solid var(--border-subtle);
-  border-radius: 10px;
-  padding: 0.85rem 1.1rem;
+  border-radius: 4px;
+  padding: 0.9rem 1.15rem;
 }
 
 .skyview-telem-header {
@@ -1174,7 +1802,6 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
 .telem-k { color: var(--text-dim); font-size: 0.78rem; text-transform: uppercase; font-weight: 600; }
 .telem-v { color: #ffffff; font-weight: 600; }
 
-/* NASA Key Badge & Mode Switcher */
 .skyview-key-badge {
   display: inline-flex;
   align-items: center;
@@ -1196,7 +1823,6 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
   box-shadow: 0 0 8px #55e69e;
 }
 
-/* Multi-exposure observation gallery */
 .skyview-gallery-strip {
   display: flex;
   gap: 0.5rem;
@@ -1207,11 +1833,11 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
 .skyview-gallery-thumb {
   width: 68px;
   height: 52px;
-  border-radius: 6px;
+  border-radius: 4px;
   border: 1.5px solid rgba(255, 255, 255, 0.15);
   cursor: pointer;
   flex-shrink: 0;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
   background: #0d0d14;
   padding: 0;
   overflow: hidden;
@@ -1224,159 +1850,25 @@ dd { margin: 0; text-align: right; color: #ffffff; font-weight: 600; }
 }
 .skyview-gallery-thumb:hover, .skyview-gallery-thumb.active {
   border-color: var(--gold);
-  box-shadow: 0 0 8px var(--gold);
+  box-shadow: 0 0 12px var(--gold);
   transform: scale(1.05);
 }
 
-/* Generous Initial Placeholder */
-.spots-empty-placeholder {
-  padding: 2.2rem 1.4rem;
-  text-align: center;
-  background: rgba(20, 20, 30, 0.6);
-  border: 1.5px dashed var(--border-gold);
-  border-radius: 12px;
-}
-.spots-empty-placeholder p {
-  margin: 0.4rem 0 0;
-  color: var(--text-muted);
-  font-size: 0.95rem;
-}
-.spots-empty-icon {
-  font-size: 2.5rem;
-  margin-bottom: 0.4rem;
-}
-
-/* ── Interactive Celestial Star Map (Tenmon-zu) ── */
-.star-map-panel {
-  grid-column: 1 / -1;
-  padding: 1.4rem;
-}
-
-.star-map-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  margin-bottom: 0.95rem;
-}
-
-.star-map-controls {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.sky-btn {
-  background: rgba(22, 22, 34, 0.88);
-  border: 1px solid var(--border-gold);
-  color: var(--text-main);
-  border-radius: 6px;
-  padding: 0.45rem 0.85rem;
-  font-family: var(--font-body);
-  font-size: 0.86rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.sky-btn:hover, .sky-btn.active {
-  background: rgba(240, 200, 80, 0.22);
-  border-color: var(--gold);
-  color: var(--gold);
-}
-
-.star-canvas-container {
-  width: 100%;
-  height: 520px;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  background: radial-gradient(circle at 50% 50%, #0a0b16 0%, #05060b 80%, #020205 100%);
-  border: 1.5px solid var(--border-gold);
-  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.9), 0 8px 30px rgba(0, 0, 0, 0.7);
-  cursor: grab;
-}
-.star-canvas-container:active { cursor: grabbing; }
-
-#sky-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.sky-overlay-info {
-  position: absolute;
-  bottom: 14px;
-  left: 14px;
-  background: rgba(10, 10, 18, 0.88);
-  border: 1px solid var(--border-gold);
-  padding: 0.45rem 0.9rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  backdrop-filter: blur(8px);
-  pointer-events: none;
-}
-
-.sky-zoom-controls {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  z-index: 10;
-}
-
-.sky-zoom-btn {
-  width: 36px;
-  height: 36px;
-  background: rgba(18, 18, 30, 0.92);
-  border: 1px solid var(--gold);
-  color: var(--gold);
-  border-radius: 6px;
-  font-size: 1.25rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.sky-zoom-btn:hover {
-  background: var(--gold);
-  color: var(--ink);
-}
-
-.sky-legend {
-  display: flex;
-  gap: 1.2rem;
-  flex-wrap: wrap;
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  margin-top: 0.85rem;
-  padding-top: 0.65rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-.sky-legend span { display: inline-flex; align-items: center; gap: 0.45rem; }
-.sky-legend-dot { width: 9px; height: 9px; border-radius: 50%; }
-
-/* ── Footnote & Disclaimer ── */
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
 footer {
   text-align: center;
-  padding: 1.2rem 1rem 2.5rem;
+  padding: 1.5rem 1rem 3rem;
   color: var(--text-dim);
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   position: relative;
   z-index: 25;
+  border-top: 1px solid rgba(139, 0, 0, 0.3);
+  margin-top: 2rem;
 }
 footer a { color: var(--gold); text-decoration: none; font-weight: 600; }
-footer a:hover { text-decoration: underline; }
+footer a:hover { text-decoration: underline; color: #ffffff; }
 
 @keyframes fadeInDown {
   from { opacity: 0; transform: translateY(-10px); }
@@ -1391,8 +1883,59 @@ footer a:hover { text-decoration: underline; }
 </head>
 <body>
 
+<!-- Ink-wash gradient layer -->
+<div class="bg-layer bg-ink"></div>
+
+<!-- SVG scene layer: Torii Gate + Mountains + Cherry Blossoms (from index.html) -->
+<div class="bg-layer bg-scene">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice"
+       width="100%" height="100%" style="position:absolute;bottom:0;">
+    <!-- Distant mountains -->
+    <path d="M0 700 Q200 450 400 580 Q550 420 720 520 Q900 380 1100 500 Q1250 420 1440 550 L1440 900 L0 900Z"
+          fill="rgba(40,20,20,0.5)" />
+    <path d="M0 750 Q300 550 600 650 Q800 520 1000 620 Q1200 530 1440 630 L1440 900 L0 900Z"
+          fill="rgba(30,15,15,0.6)" />
+
+    <!-- Torii gate -->
+    <g transform="translate(720,520)" fill="none" stroke="#8b0000" stroke-width="4" opacity="0.7">
+      <line x1="-80" y1="0" x2="-80" y2="200" />
+      <line x1="80"  y1="0" x2="80"  y2="200" />
+      <path d="M-110,-10 Q0,-30 110,-10" stroke-width="6" />
+      <line x1="-95" y1="20" x2="95" y2="20" stroke-width="4" />
+      <line x1="-80" y1="0"  x2="-80" y2="-15" />
+      <line x1="80"  y1="0"  x2="80"  y2="-15" />
+    </g>
+
+    <!-- Cherry blossom branches -->
+    <g opacity="0.3">
+      <path d="M0 300 Q60 280 120 310 Q160 290 200 320" stroke="#5a2a2a" stroke-width="2" fill="none"/>
+      <circle cx="130" cy="300" r="4" fill="#ffb7c5" opacity="0.6"/>
+      <circle cx="160" cy="295" r="3" fill="#ffb7c5" opacity="0.5"/>
+      <circle cx="180" cy="310" r="5" fill="#ffb7c5" opacity="0.4"/>
+      <circle cx="110" cy="308" r="3" fill="#ffb7c5" opacity="0.7"/>
+      <circle cx="200" cy="318" r="4" fill="#ffb7c5" opacity="0.3"/>
+    </g>
+    <g opacity="0.25">
+      <path d="M1440 250 Q1380 240 1320 270 Q1280 250 1240 280" stroke="#5a2a2a" stroke-width="2" fill="none"/>
+      <circle cx="1340" cy="260" r="4" fill="#ffb7c5" opacity="0.6"/>
+      <circle cx="1300" cy="258" r="3" fill="#ffb7c5" opacity="0.5"/>
+      <circle cx="1270" cy="272" r="5" fill="#ffb7c5" opacity="0.4"/>
+      <circle cx="1360" cy="268" r="3" fill="#ffb7c5" opacity="0.7"/>
+    </g>
+
+    <!-- Celestial Moon -->
+    <circle cx="1150" cy="120" r="55" fill="rgba(255,215,0,0.06)" />
+    <circle cx="1150" cy="120" r="50" fill="none" stroke="rgba(255,215,0,0.1)" stroke-width="1" />
+  </svg>
+</div>
+
+<!-- Ambient Stars & Falling Petals Canvases -->
 <canvas id="bg-stars" aria-hidden="true"></canvas>
 <canvas id="petals" aria-hidden="true"></canvas>
+
+<!-- Side Kanji Decorative Elements (from index.html) -->
+<div class="side-kanji left">月読の見張り</div>
+<div class="side-kanji right">天体観測所</div>
 
 <!-- Japanese Kamon Icons (Defs for map markers & UI) -->
 <svg width="0" height="0" style="position:absolute">
@@ -1452,26 +1995,105 @@ footer a:hover { text-decoration: underline; }
   </defs>
 </svg>
 
+<!-- Top-Left Tsukuyomi Dropdown Navigation Menu -->
+<div class="tsukuyomi-nav-dropdown" id="navDropdown">
+  <button type="button" class="nav-dropdown-trigger" id="navDropdownTrigger" aria-haspopup="true" aria-expanded="false" title="Tsukuyomi Navigation Realms">
+    <span class="corner tl"></span>
+    <span class="corner tr"></span>
+    <span class="corner bl"></span>
+    <span class="corner br"></span>
+    <span class="nav-trigger-icon">⛩️</span>
+    <span class="nav-trigger-text">TSUKUYOMI</span>
+    <span class="nav-trigger-arrow">▾</span>
+  </button>
+  <div class="nav-dropdown-menu" id="navDropdownMenu" role="menu">
+    <div class="nav-dropdown-header">✦ 導 き · SANCTUARY REALMS ✦</div>
+    <a href="index.html" class="nav-menu-item" role="menuitem">
+      <span class="nav-menu-icon">🏯</span>
+      <div class="nav-menu-info">
+        <div class="nav-menu-title">Sanctuary Gate</div>
+        <div class="nav-menu-desc">Return to the grand entrance</div>
+      </div>
+      <span class="nav-menu-arrow">›</span>
+    </a>
+    <a href="watchtower.html" class="nav-menu-item active" role="menuitem">
+      <span class="nav-menu-icon">⛩️</span>
+      <div class="nav-menu-info">
+        <div class="nav-menu-title">The Watchtower</div>
+        <div class="nav-menu-desc">Celestial clarity & night sky sanctuaries</div>
+      </div>
+      <span class="nav-menu-badge">Current</span>
+    </a>
+    <a href="celestial-scroll.html" class="nav-menu-item" role="menuitem">
+      <span class="nav-menu-icon">📜</span>
+      <div class="nav-menu-info">
+        <div class="nav-menu-title">The Celestial Scroll</div>
+        <div class="nav-menu-desc">Ancient lunar calendar & space launches</div>
+      </div>
+      <span class="nav-menu-arrow">›</span>
+    </a>
+    <a href="spirit-lens.html" class="nav-menu-item" role="menuitem">
+      <span class="nav-menu-icon">🔮</span>
+      <div class="nav-menu-info">
+        <div class="nav-menu-title">The Spirit Lens</div>
+        <div class="nav-menu-desc">Deep-space image purification & vision</div>
+      </div>
+      <span class="nav-menu-arrow">›</span>
+    </a>
+  </div>
+</div>
+
 <header>
-  <div class="header-crest">
-    <svg width="78" height="60" viewBox="0 0 120 90" aria-hidden="true">
-      <g fill="#e62b3c">
-        <path d="M4 18 Q60 4 116 18 L112 28 Q60 16 8 28Z"/>
-        <rect x="18" y="30" width="84" height="8"/>
-        <rect x="26" y="28" width="9" height="60"/>
-        <rect x="85" y="28" width="9" height="60"/>
-        <rect x="56" y="18" width="8" height="12"/>
-      </g>
-      <path d="M4 18 Q60 4 116 18" stroke="#f0c850" stroke-width="2.5" fill="none"/>
+  <div class="top-nav-row">
+    <div class="eyebrow-pill">✦ 月見 · TSUKUYOMI WATCH · 第壱見張り台 ✦</div>
+  </div>
+
+  <!-- Interactive Rive Celestial Crest -->
+  <div class="header-crest-wrap">
+    <div class="rive-crest-wrapper" id="rive-container" title="Interactive Rive Celestial Animation · Click to Pulse">
+      <canvas id="rive-canvas" width="120" height="120" class="rive-canvas"></canvas>
+      <div class="crest-torii-overlay">
+        <svg width="44" height="34" viewBox="0 0 120 90" aria-hidden="true">
+          <g fill="#ffd700">
+            <path d="M4 18 Q60 4 116 18 L112 28 Q60 16 8 28Z"/>
+            <rect x="18" y="30" width="84" height="8"/>
+            <rect x="26" y="28" width="9" height="60"/>
+            <rect x="85" y="28" width="9" height="60"/>
+            <rect x="56" y="18" width="8" height="12"/>
+          </g>
+          <path d="M4 18 Q60 4 116 18" stroke="#8b0000" stroke-width="2.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="rive-glow-ring"></div>
+    </div>
+  </div>
+
+  <h1 class="app-title">THE WATCHTOWER</h1>
+  <p class="subtitle-kanji">月 読 の 見 張 り 台</p>
+  <p class="page-description">Ascend the sacred watchtower to survey real-time atmospheric clarity across the realm, navigate the living celestial sphere, and uncover pristine sanctuaries for night sky observation.</p>
+
+  <!-- Katana Divider from index.html -->
+  <div class="katana-divider">
+    <svg viewBox="0 0 320 24" xmlns="http://www.w3.org/2000/svg">
+      <line x1="20" y1="12" x2="300" y2="12" stroke="url(#katanaBladeWatch)" stroke-width="1.8" stroke-linecap="round"/>
+      <ellipse cx="240" cy="12" rx="8" ry="6" fill="none" stroke="#8b0000" stroke-width="1.4"/>
+      <line x1="252" y1="12" x2="300" y2="12" stroke="#3a1a1a" stroke-width="4.5" stroke-linecap="round"/>
+      <line x1="258" y1="10" x2="258" y2="14" stroke="#8b0000" stroke-width="1"/>
+      <line x1="266" y1="10" x2="266" y2="14" stroke="#8b0000" stroke-width="1"/>
+      <line x1="274" y1="10" x2="274" y2="14" stroke="#8b0000" stroke-width="1"/>
+      <line x1="282" y1="10" x2="282" y2="14" stroke="#8b0000" stroke-width="1"/>
+      <line x1="290" y1="10" x2="290" y2="14" stroke="#8b0000" stroke-width="1"/>
+      <circle cx="298" cy="12" r="3.2" fill="#8b0000" opacity="0.8"/>
+      <defs>
+        <linearGradient id="katanaBladeWatch" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="transparent"/>
+          <stop offset="20%" stop-color="rgba(192,192,192,0.6)"/>
+          <stop offset="80%" stop-color="rgba(255,215,0,0.5)"/>
+          <stop offset="100%" stop-color="rgba(184,134,11,0.7)"/>
+        </linearGradient>
+      </defs>
     </svg>
   </div>
-  <h1>見張り台 · The Watchtower</h1>
-  <p class="subtitle">Celestial Clarity & Stargazing Sanctuary</p>
-  <svg class="katana-divider" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 7 L520 4 L600 7 L520 9Z" fill="#d5d5df"/>
-    <rect x="520" y="1" width="6" height="12" fill="#f0c850"/>
-    <rect x="526" y="4" width="74" height="6" fill="#e62b3c"/>
-  </svg>
 </header>
 
 <!-- Modern Location Search Bar -->
@@ -1799,6 +2421,7 @@ footer a:hover { text-decoration: underline; }
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
+<script src="https://unpkg.com/@rive-app/canvas@2.9.1"></script>
 <script>
 /* ───────────────────────────────────────────────────
    The Watchtower · 見張り台 (watchtower.js)
@@ -1913,15 +2536,16 @@ footer a:hover { text-decoration: underline; }
 
   function getSpotLabel(category) {
     const labels = {
-      shrine: "⛩ Shinto Shrine",
-      peak: "🗻 Mountain Peak",
-      temple: "🏯 Buddhist Temple",
-      observatory: "🔭 Celestial Observatory",
-      viewpoint: "👁 Scenic Lookout",
-      park: "🌲 Sacred Forest",
-      water: "🌊 Sacred Waters",
-      ruins: "🏛 Ancient Citadel",
-      default: "✨ Celestial Spot"
+      shrine: "⛩ Shrine",
+      peak: "🗻 Peak",
+      temple: "🏯 Temple",
+      observatory: "🔭 Observatory",
+      viewpoint: "👁 Viewpoint",
+      park: "🌲 Park / Reserve",
+      water: "🌊 Waterfront",
+      ruins: "🏛 Historic Site",
+      default: "✨ Stargazing Spot",
+      place_of_worship: "⛩ Place of Worship"
     };
     return labels[category] || "📍 Stargazing Site";
   }
@@ -2444,14 +3068,14 @@ footer a:hover { text-decoration: underline; }
   function generateRichFallbacks(baseLat, baseLng, existingSpots) {
     const baseWx = currentWeather ? extractWeatherValues(currentWeather) : { cloud: 30, humidity: 45, visibility: 22000, wind: 6, temp: 15 };
     const templates = [
-      { name: "Northern Ridge Celestial Shrine", dlat: 0.12, dlng: 0.04, type: "shrine" },
-      { name: "High Summit Stargazing Peak", dlat: 0.06, dlng: 0.19, type: "peak" },
-      { name: "Whispering Pines Observatory", dlat: -0.09, dlng: 0.15, type: "observatory" },
-      { name: "Zen Moonview Temple", dlat: 0.03, dlng: -0.16, type: "temple" },
-      { name: "Ancient Citadel Bastion Lookout", dlat: -0.14, dlng: -0.08, type: "ruins" },
-      { name: "Silver Lake Dark Sky Sanctuary", dlat: -0.07, dlng: 0.22, type: "water" },
-      { name: "Crest Mountain Forest Reserve", dlat: 0.16, dlng: -0.09, type: "park" },
-      { name: "Sunset Horizon Observation Deck", dlat: 0.02, dlng: 0.11, type: "viewpoint" }
+      { name: "Hilltop Viewpoint (North)", dlat: 0.12, dlng: 0.04, type: "viewpoint" },
+      { name: "Summit Ridge Lookout", dlat: 0.06, dlng: 0.19, type: "peak" },
+      { name: "Community Observatory", dlat: -0.09, dlng: 0.15, type: "observatory" },
+      { name: "Heritage Park Overlook", dlat: 0.03, dlng: -0.16, type: "park" },
+      { name: "Lakeside Scenic Point", dlat: -0.14, dlng: -0.08, type: "viewpoint" },
+      { name: "Reservoir Dark Sky Area", dlat: -0.07, dlng: 0.22, type: "water" },
+      { name: "Forest Reserve Clearing", dlat: 0.16, dlng: -0.09, type: "park" },
+      { name: "Elevated Observation Point", dlat: 0.02, dlng: 0.11, type: "viewpoint" }
     ];
 
     const results = [...existingSpots];
@@ -2545,7 +3169,7 @@ footer a:hover { text-decoration: underline; }
               <div class="spot-icon-mini" style="border-color:${kamon.color};">
                 ${kamon.svg}
               </div>
-              <span style="font-weight:600; color:#ffffff;">${getSpotLabel(cat)}</span>
+              <span style="font-weight:600; color:#ffffff;">${esc(s.name)}</span>
               <span class="spot-dist-pill">📍 ${s.dist.toFixed(1)} km</span>
               <span class="spot-bortle-pill">
                 <span class="bortle-dot" style="background:${dotColor};"></span>
@@ -2558,9 +3182,9 @@ footer a:hover { text-decoration: underline; }
             </div>
           </div>
 
-          <!-- Location Name: FULL 100% BREADTH Across Card! -->
+          <!-- Location Category -->
           <div class="spot-title-area">
-            <h3 class="spot-name-full">${esc(s.name)}</h3>
+            <h3 class="spot-name-full" style="font-size:0.78rem; opacity:0.7;">${getSpotLabel(cat)}</h3>
           </div>
 
           <!-- Stargazing Telemetry Metrics Row -->
@@ -2653,42 +3277,42 @@ footer a:hover { text-decoration: underline; }
 
     // Deep-Sky Objects (Messier Nebulae, Star Clusters & Galaxies)
     const DEEP_SKY_OBJECTS = [
-      { name: "M42 Orion Nebula (オリオン星雲)", ra: 5.588, dec: -5.39, type: "nebula", color: "#ff66cc", queryTarget: "M42" },
-      { name: "M31 Andromeda Galaxy (銀河)", ra: 0.712, dec: 41.27, type: "galaxy", color: "#80c4ff", queryTarget: "M31" },
-      { name: "M45 Pleiades / Subaru (昴)", ra: 3.79, dec: 24.11, type: "cluster", color: "#b8e2ff", queryTarget: "M45" },
-      { name: "M13 Hercules Cluster (球状星団)", ra: 16.69, dec: 36.46, type: "globular", color: "#ffd280", queryTarget: "M13" },
-      { name: "M1 Crab Nebula (かに星雲)", ra: 5.575, dec: 22.01, type: "supernova", color: "#ff9966", queryTarget: "M1" },
-      { name: "Sgr A* Galactic Core (銀河中心)", ra: 17.76, dec: -29.01, type: "core", color: "#f0c850", queryTarget: "Sgr A*" }
+      { name: "M42 Orion Nebula", ra: 5.588, dec: -5.39, type: "nebula", color: "#ff66cc", queryTarget: "M42" },
+      { name: "M31 Andromeda Galaxy", ra: 0.712, dec: 41.27, type: "galaxy", color: "#80c4ff", queryTarget: "M31" },
+      { name: "M45 Pleiades (Subaru)", ra: 3.79, dec: 24.11, type: "cluster", color: "#b8e2ff", queryTarget: "M45" },
+      { name: "M13 Hercules Cluster", ra: 16.69, dec: 36.46, type: "globular", color: "#ffd280", queryTarget: "M13" },
+      { name: "M1 Crab Nebula", ra: 5.575, dec: 22.01, type: "supernova", color: "#ff9966", queryTarget: "M1" },
+      { name: "Sgr A* Galactic Center", ra: 17.76, dec: -29.01, type: "core", color: "#f0c850", queryTarget: "Sgr A*" }
     ];
 
     // Major Observable Planets (Ecliptic Positions)
     const PLANETS = [
-      { name: "Jupiter (木星)", ra: 4.15, dec: 20.8, color: "#f5eedf", halo: "rgba(240, 200, 80, 0.4)", r: 4.5 },
-      { name: "Mars (火星)", ra: 8.35, dec: 22.4, color: "#ff6644", halo: "rgba(230, 43, 60, 0.4)", r: 3.8 },
-      { name: "Venus (金星)", ra: 17.1, dec: -23.8, color: "#ffffff", halo: "rgba(220, 235, 255, 0.5)", r: 5.0 },
-      { name: "Saturn (土星)", ra: 23.25, dec: -7.2, color: "#e8d8a0", halo: "rgba(184, 146, 44, 0.4)", r: 4.0 }
+      { name: "Jupiter", ra: 4.15, dec: 20.8, color: "#f5eedf", halo: "rgba(240, 200, 80, 0.4)", r: 4.5 },
+      { name: "Mars", ra: 8.35, dec: 22.4, color: "#ff6644", halo: "rgba(230, 43, 60, 0.4)", r: 3.8 },
+      { name: "Venus", ra: 17.1, dec: -23.8, color: "#ffffff", halo: "rgba(220, 235, 255, 0.5)", r: 5.0 },
+      { name: "Saturn", ra: 23.25, dec: -7.2, color: "#e8d8a0", halo: "rgba(184, 146, 44, 0.4)", r: 4.0 }
     ];
 
     // Prominent Real Stars Catalog (RA in hours, Dec in degrees, Magnitude, Color)
     const STARS = [
-      { name: "Sirius (天狼星)", ra: 6.75, dec: -16.7, mag: -1.46, color: "#88d5ff" },
-      { name: "Canopus (老人星)", ra: 6.4, dec: -52.7, mag: -0.74, color: "#f8f9ff" },
-      { name: "Arcturus (大角)", ra: 14.26, dec: 19.18, mag: -0.05, color: "#ffb469" },
-      { name: "Vega (織姫 / 織女星)", ra: 18.62, dec: 38.78, mag: 0.03, color: "#b0e2ff" },
+      { name: "Sirius", ra: 6.75, dec: -16.7, mag: -1.46, color: "#88d5ff" },
+      { name: "Canopus", ra: 6.4, dec: -52.7, mag: -0.74, color: "#f8f9ff" },
+      { name: "Arcturus", ra: 14.26, dec: 19.18, mag: -0.05, color: "#ffb469" },
+      { name: "Vega", ra: 18.62, dec: 38.78, mag: 0.03, color: "#b0e2ff" },
       { name: "Capella", ra: 5.28, dec: 45.99, mag: 0.08, color: "#fff4b8" },
-      { name: "Rigel (参宿七)", ra: 5.24, dec: -8.2, mag: 0.13, color: "#a5d8ff" },
+      { name: "Rigel", ra: 5.24, dec: -8.2, mag: 0.13, color: "#a5d8ff" },
       { name: "Procyon", ra: 7.65, dec: 5.22, mag: 0.38, color: "#fffae8" },
-      { name: "Betelgeuse (平家星)", ra: 5.92, dec: 7.41, mag: 0.5, color: "#ff6242" },
+      { name: "Betelgeuse", ra: 5.92, dec: 7.41, mag: 0.5, color: "#ff6242" },
       { name: "Achernar", ra: 1.63, dec: -57.24, mag: 0.46, color: "#b5e2ff" },
-      { name: "Altair (彦星 / 牽牛星)", ra: 19.84, dec: 8.87, mag: 0.77, color: "#f5f8ff" },
+      { name: "Altair", ra: 19.84, dec: 8.87, mag: 0.77, color: "#f5f8ff" },
       { name: "Aldebaran", ra: 4.6, dec: 16.51, mag: 0.85, color: "#ff9d5c" },
-      { name: "Antares (心宿二)", ra: 16.49, dec: -26.43, mag: 0.96, color: "#ff5035" },
-      { name: "Spica (角宿一)", ra: 13.42, dec: -11.16, mag: 0.97, color: "#98dcff" },
+      { name: "Antares", ra: 16.49, dec: -26.43, mag: 0.96, color: "#ff5035" },
+      { name: "Spica", ra: 13.42, dec: -11.16, mag: 0.97, color: "#98dcff" },
       { name: "Pollux", ra: 7.76, dec: 28.03, mag: 1.14, color: "#ffd08a" },
       { name: "Fomalhaut", ra: 22.96, dec: -29.62, mag: 1.16, color: "#eef6ff" },
-      { name: "Deneb (天津四)", ra: 20.69, dec: 45.28, mag: 1.25, color: "#d0ebff" },
-      { name: "Regulus (軒轅十四)", ra: 10.14, dec: 11.97, mag: 1.36, color: "#aee0ff" },
-      { name: "Polaris (北極星)", ra: 2.53, dec: 89.26, mag: 1.98, color: "#fffde0" },
+      { name: "Deneb", ra: 20.69, dec: 45.28, mag: 1.25, color: "#d0ebff" },
+      { name: "Regulus", ra: 10.14, dec: 11.97, mag: 1.36, color: "#aee0ff" },
+      { name: "Polaris", ra: 2.53, dec: 89.26, mag: 1.98, color: "#fffde0" },
       { name: "Castor", ra: 7.58, dec: 31.89, mag: 1.58, color: "#e8f4ff" },
       { name: "Bellatrix", ra: 5.42, dec: 6.35, mag: 1.64, color: "#9fd3ff" },
       { name: "Alnilam (Orion Belt)", ra: 5.6, dec: -1.2, mag: 1.69, color: "#a5d8ff" },
@@ -2696,13 +3320,13 @@ footer a:hover { text-decoration: underline; }
       { name: "Mintaka (Orion Belt)", ra: 5.53, dec: -0.3, mag: 2.25, color: "#a5d8ff" },
       { name: "Saiph", ra: 5.79, dec: -9.67, mag: 2.07, color: "#9fd3ff" },
       // Ursa Major (Big Dipper / 北斗七星)
-      { name: "Dubhe (天枢)", ra: 11.06, dec: 61.75, mag: 1.79, color: "#ffd98c" },
-      { name: "Merak (天璇)", ra: 11.03, dec: 56.38, mag: 2.37, color: "#e8f4ff" },
-      { name: "Phecda (天玑)", ra: 11.9, dec: 53.69, mag: 2.44, color: "#e8f4ff" },
-      { name: "Megrez (天权)", ra: 12.25, dec: 57.03, mag: 3.31, color: "#e8f4ff" },
-      { name: "Alioth (玉衡)", ra: 12.9, dec: 55.96, mag: 1.76, color: "#e8f4ff" },
-      { name: "Mizar (开阳)", ra: 13.4, dec: 54.92, mag: 2.23, color: "#e8f4ff" },
-      { name: "Alkaid (摇光)", ra: 13.79, dec: 49.31, mag: 1.86, color: "#a5d8ff" },
+      { name: "Dubhe", ra: 11.06, dec: 61.75, mag: 1.79, color: "#ffd98c" },
+      { name: "Merak", ra: 11.03, dec: 56.38, mag: 2.37, color: "#e8f4ff" },
+      { name: "Phecda", ra: 11.9, dec: 53.69, mag: 2.44, color: "#e8f4ff" },
+      { name: "Megrez", ra: 12.25, dec: 57.03, mag: 3.31, color: "#e8f4ff" },
+      { name: "Alioth", ra: 12.9, dec: 55.96, mag: 1.76, color: "#e8f4ff" },
+      { name: "Mizar", ra: 13.4, dec: 54.92, mag: 2.23, color: "#e8f4ff" },
+      { name: "Alkaid", ra: 13.79, dec: 49.31, mag: 1.86, color: "#a5d8ff" },
       // Cassiopeia
       { name: "Schedar", ra: 0.68, dec: 56.54, mag: 2.24, color: "#ffc87a" },
       { name: "Caph", ra: 0.15, dec: 59.15, mag: 2.28, color: "#fffbe8" },
@@ -2714,11 +3338,11 @@ footer a:hover { text-decoration: underline; }
     // Constellation Stick Figures (links between star indices)
     const CONSTELLATIONS = [
       // Orion (Hunter)
-      { name: "Orion", links: [["Betelgeuse (平家星)", "Bellatrix"], ["Bellatrix", "Mintaka (Orion Belt)"], ["Mintaka (Orion Belt)", "Alnilam (Orion Belt)"], ["Alnilam (Orion Belt)", "Alnitak (Orion Belt)"], ["Alnitak (Orion Belt)", "Saiph"], ["Saiph", "Rigel (参宿七)"], ["Rigel (参宿七)", "Mintaka (Orion Belt)"], ["Betelgeuse (平家星)", "Alnitak (Orion Belt)"]] },
+      { name: "Orion", links: [["Betelgeuse", "Bellatrix"], ["Bellatrix", "Mintaka (Orion Belt)"], ["Mintaka (Orion Belt)", "Alnilam (Orion Belt)"], ["Alnilam (Orion Belt)", "Alnitak (Orion Belt)"], ["Alnitak (Orion Belt)", "Saiph"], ["Saiph", "Rigel"], ["Rigel", "Mintaka (Orion Belt)"], ["Betelgeuse", "Alnitak (Orion Belt)"]] },
       // Ursa Major (Big Dipper)
-      { name: "Ursa Major (北斗七星)", links: [["Dubhe (天枢)", "Merak (天璇)"], ["Merak (天璇)", "Phecda (天玑)"], ["Phecda (天玑)", "Megrez (天权)"], ["Megrez (天权)", "Dubhe (天枢)"], ["Megrez (天权)", "Alioth (玉衡)"], ["Alioth (玉衡)", "Mizar (开阳)"], ["Mizar (开阳)", "Alkaid (摇光)"]] },
+      { name: "Ursa Major", links: [["Dubhe", "Merak"], ["Merak", "Phecda"], ["Phecda", "Megrez"], ["Megrez", "Dubhe"], ["Megrez", "Alioth"], ["Alioth", "Mizar"], ["Mizar", "Alkaid"]] },
       // Summer Triangle (大三角)
-      { name: "Summer Triangle", links: [["Vega (織姫 / 織女星)", "Deneb (天津四)"], ["Deneb (天津四)", "Altair (彦星 / 牽牛星)"], ["Altair (彦星 / 牽牛星)", "Vega (織姫 / 織女星)"]] },
+      { name: "Summer Triangle", links: [["Vega", "Deneb"], ["Deneb", "Altair"], ["Altair", "Vega"]] },
       // Cassiopeia (W-shape)
       { name: "Cassiopeia", links: [["Caph", "Schedar"], ["Schedar", "Gamma Cas"], ["Gamma Cas", "Ruchbah"], ["Ruchbah", "Segin"]] }
     ];
@@ -3698,11 +4322,134 @@ footer a:hover { text-decoration: underline; }
     }
   }
 
+
+  /* ── Celestial Observatory Crest & Armillary Sphere (Authentic Tsukuyomi Animation) ── */
+  function initCelestialCrest() {
+    const canvas = document.getElementById("rive-canvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let angle = 0;
+    const stars = Array.from({ length: 30 }, () => ({
+      x: (Math.random() - 0.5) * 100,
+      y: (Math.random() - 0.5) * 100,
+      r: Math.random() * 1.6 + 0.6,
+      speed: Math.random() * 0.022 + 0.01,
+      phase: Math.random() * Math.PI * 2
+    }));
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      angle += 0.018;
+
+      // Soft Celestial Aura
+      const grad = ctx.createRadialGradient(cx, cy, 8, cx, cy, 58);
+      grad.addColorStop(0, "rgba(255, 215, 0, 0.3)");
+      grad.addColorStop(0.5, "rgba(139, 0, 0, 0.25)");
+      grad.addColorStop(1, "rgba(10, 10, 10, 0)");
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 58, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Triple Armillary Celestial Rings
+      ctx.save();
+      ctx.strokeStyle = "rgba(255, 215, 0, 0.55)";
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, 48, 16, angle, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.strokeStyle = "rgba(201, 80, 107, 0.48)";
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, 44, 22, -angle * 0.8, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.strokeStyle = "rgba(184, 134, 11, 0.4)";
+      ctx.lineWidth = 1.0;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, 42, 36, angle * 0.5, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+
+      // Glowing Lunar Core
+      const moonGrad = ctx.createRadialGradient(cx - 5, cy - 5, 2, cx, cy, 20);
+      moonGrad.addColorStop(0, "#fff8e0");
+      moonGrad.addColorStop(0.35, "#ffd700");
+      moonGrad.addColorStop(0.75, "#b8860b");
+      moonGrad.addColorStop(1, "#8b0000");
+      ctx.fillStyle = moonGrad;
+      ctx.shadowColor = "#ffd700";
+      ctx.shadowBlur = 16;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 16, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Orbiting Twinkling Constellation Stars
+      stars.forEach((s) => {
+        const rad = Math.sqrt(s.x * s.x + s.y * s.y);
+        const curA = Math.atan2(s.y, s.x) + s.speed;
+        s.x = Math.cos(curA) * rad;
+        s.y = Math.sin(curA) * rad;
+        const alpha = 0.35 + 0.45 * Math.sin(angle * 2.5 + s.phase);
+        ctx.fillStyle = `rgba(255, 215, 0, ${alpha})`;
+        ctx.beginPath();
+        ctx.arc(cx + s.x, cy + s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+
+    const container = document.getElementById("rive-container");
+    if (container) {
+      container.addEventListener("click", () => {
+        container.classList.add("pulse");
+        setTimeout(() => container.classList.remove("pulse"), 700);
+      });
+    }
+  }
+
+    /* ── Tsukuyomi Dropdown Navigation Menu ── */
+  function initTsukuyomiDropdown() {
+    const dropdown = document.getElementById("navDropdown");
+    const trigger = document.getElementById("navDropdownTrigger");
+    if (!dropdown || !trigger) return;
+
+    trigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = dropdown.classList.toggle("open");
+      trigger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove("open");
+        trigger.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        dropdown.classList.remove("open");
+        trigger.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
   /* ── Application Boot ── */
   function boot() {
+    initTsukuyomiDropdown();
     initMap();
     initPetals();
     initBackgroundStarfield();
+    initRive();
     skyEngine = createCelestialEngine("star-canvas-container", "sky-canvas");
     initSkyViewController();
 
@@ -3739,3 +4486,4 @@ footer a:hover { text-decoration: underline; }
 </script>
 </body>
 </html>
+

@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Watchtower · 見張り台 — Stargazing & Celestial Map</title>
+<link rel="stylesheet" href="page-transitions.css">
+<script src="page-transitions.js" defer></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2644,6 +2646,14 @@ footer a:hover { text-decoration: underline; color: #ffffff; }
     mainMarker.on("click", () => {
       if (baseLocation) selectSpot(null);
     });
+
+    // Invalidate size on resize and post-load so all tiles render seamlessly
+    window.addEventListener("resize", () => {
+      if (map) map.invalidateSize();
+    });
+    setTimeout(() => { if (map) map.invalidateSize(); }, 150);
+    setTimeout(() => { if (map) map.invalidateSize(); }, 400);
+    setTimeout(() => { if (map) map.invalidateSize(); }, 700);
   }
 
   /* ── Kamon Marker Builder ── */
@@ -3252,8 +3262,8 @@ footer a:hover { text-decoration: underline; color: #ffffff; }
     if (!canvas || !container) return null;
     const ctx = canvas.getContext("2d");
 
-    let width = canvas.width = container.offsetWidth;
-    let height = canvas.height = container.offsetHeight;
+    let width = (canvas.width = container.offsetWidth || container.clientWidth || 800);
+    let height = (canvas.height = container.offsetHeight || container.clientHeight || 520);
     let observerLat = 35.36; // Default Latitude
     let observerLng = 138.72; // Default Longitude
 
@@ -3359,11 +3369,18 @@ footer a:hover { text-decoration: underline; color: #ffffff; }
     }
 
     function resize() {
-      width = canvas.width = container.offsetWidth;
-      height = canvas.height = container.offsetHeight;
+      const cw = container.offsetWidth || container.clientWidth;
+      const ch = container.offsetHeight || container.clientHeight;
+      if (cw > 0 && ch > 0) {
+        width = canvas.width = cw;
+        height = canvas.height = ch;
+      }
       draw();
     }
     window.addEventListener("resize", resize);
+    if (window.ResizeObserver) {
+      new ResizeObserver(() => resize()).observe(container);
+    }
 
     // Calculate Local Sidereal Time in Hours
     function getLST(date, lonDeg) {
@@ -3778,8 +3795,18 @@ footer a:hover { text-decoration: underline; color: #ffffff; }
     if (btnZoomIn) btnZoomIn.addEventListener("click", () => { zoom = Math.min(2.8, zoom * 1.25); draw(); });
     if (btnZoomOut) btnZoomOut.addEventListener("click", () => { zoom = Math.max(0.65, zoom / 1.25); draw(); });
 
-    // Initial render
+    // Initial render and smooth 60fps celestial animation loop
     draw();
+    let animId = null;
+    function startAnimation() {
+      if (animId) cancelAnimationFrame(animId);
+      function loop() {
+        draw();
+        animId = requestAnimationFrame(loop);
+      }
+      animId = requestAnimationFrame(loop);
+    }
+    startAnimation();
 
     return {
       setCoordinates: (lat, lng) => {
@@ -3787,7 +3814,11 @@ footer a:hover { text-decoration: underline; color: #ffffff; }
         observerLng = lng;
         draw();
       },
-      refresh: draw
+      refresh: () => {
+        resize();
+        draw();
+      },
+      resize
     };
   }
 
@@ -4443,18 +4474,37 @@ footer a:hover { text-decoration: underline; color: #ffffff; }
     });
   }
 
+  /* ── Rive Compatibility Alias ── */
+  function initRive() {
+    initCelestialCrest();
+  }
+
   /* ── Application Boot ── */
   function boot() {
-    initTsukuyomiDropdown();
-    initMap();
-    initPetals();
-    initBackgroundStarfield();
-    initRive();
-    skyEngine = createCelestialEngine("star-canvas-container", "sky-canvas");
-    initSkyViewController();
+    try { initTsukuyomiDropdown(); } catch (e) { console.error("Dropdown init error:", e); }
+    try { initMap(); } catch (e) { console.error("Map init error:", e); }
+    try { initPetals(); } catch (e) { console.error("Petals init error:", e); }
+    try { initBackgroundStarfield(); } catch (e) { console.error("Starfield init error:", e); }
+    try { initCelestialCrest(); } catch (e) { console.error("Crest init error:", e); }
+    try {
+      skyEngine = createCelestialEngine("star-canvas-container", "sky-canvas");
+    } catch (e) {
+      console.error("Celestial engine init error:", e);
+    }
+    try { initSkyViewController(); } catch (e) { console.error("SkyView controller init error:", e); }
 
     // Auto-search default celestial spot: Mount Fuji (富士山)
-    updateLocation(35.3606, 138.7274, "Mount Fuji, Kitayama, Fujinomiya, Shizuoka Prefecture, Japan");
+    try {
+      updateLocation(35.3606, 138.7274, "Mount Fuji, Kitayama, Fujinomiya, Shizuoka Prefecture, Japan");
+    } catch (e) {
+      console.error("Location update error:", e);
+    }
+
+    // Post-entrance layout refresh for canvas and map
+    setTimeout(() => {
+      if (map) map.invalidateSize();
+      if (skyEngine && skyEngine.resize) skyEngine.resize();
+    }, 600);
 
     // Attempt browser geolocation if user permits
     if (navigator.geolocation) {
